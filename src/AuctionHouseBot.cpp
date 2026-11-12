@@ -434,6 +434,11 @@ void AuctionHouseBot::CalculateItemValue(ItemTemplate const* itemProto, uint64& 
     if (itemLevelPriceMultplier > 0.0f && itemProto->ItemLevel > 0 && advancedPricingMultiplier == 1.0f)
         outBuyoutPrice *= itemProto->ItemLevel * itemLevelPriceMultplier;
 
+    // Per-item percent (e.g. old-tier materials made cheaper after a content phase change)
+    auto itemPercentIt = PriceMultiplierPercentByItemID.find(itemProto->ItemId);
+    if (itemPercentIt != PriceMultiplierPercentByItemID.end())
+        outBuyoutPrice = outBuyoutPrice * itemPercentIt->second / 100;
+
     // Avoid price overflows
     if (outBuyoutPrice > MaxBuyoutPriceInCopper)
         outBuyoutPrice = MaxBuyoutPriceInCopper;
@@ -2192,6 +2197,8 @@ void AuctionHouseBot::InitializeConfiguration()
     PriceMinimumCenterBaseMisc = sConfigMgr->GetOption<uint32>("AuctionHouseBot.PriceMinimumCenterBase.Misc", 1000);
     PriceMinimumCenterBaseGlyph = sConfigMgr->GetOption<uint32>("AuctionHouseBot.PriceMinimumCenterBase.Glyph", 1000);
     AddItemValuePairsToItemIDMap(PriceMinimumCenterBaseOverridesByItemID, sConfigMgr->GetOption<std::string>("AuctionHouseBot.PriceMinimumCenterBase.OverrideItems", ""));
+    PriceMultiplierPercentByItemID.clear();
+    AddItemValuePairsToItemIDMap(PriceMultiplierPercentByItemID, sConfigMgr->GetOption<std::string>("AuctionHouseBot.PriceMultiplier.ItemPercent", ""));
 
     // Item level Restrictions
     ListedItemLevelRestrictedEnabled = sConfigMgr->GetOption<bool>("AuctionHouseBot.ListedItemLevelRestrict.Enabled", false);
