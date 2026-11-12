@@ -526,6 +526,20 @@ AuctionHouseBot.PriceMinimumCenterBase.Glyph = 1000
 AuctionHouseBot.PriceMinimumCenterBase.OverrideItems = 
 
 ###############################################################################
+#    AuctionHouseBot.PriceMultiplier.ItemPercent
+#        A price percent per item, applied after every other multiplier, as
+#        comma separated itemID:percent pairs.  50 halves the price, 200
+#        doubles it.  Useful to make old-tier materials cheaper once a newer
+#        content phase opens.  Note: a price that drops below the item's vendor
+#        sell price is lifted back up while
+#        BuyoutBelowVendorVariationAddPercentEnabled is true.
+#        Example: 2589:50,2592:50 (Linen and Wool Cloth at half price)
+#    Default: (empty)
+###############################################################################
+
+AuctionHouseBot.PriceMultiplier.ItemPercent =
+
+###############################################################################
 #    AuctionHouseBot.AdvancedPricing.<Category>.<Subclass>.Enabled
 #        Enable/Disable the use of advanced (logarithmic) pricing formulas 
 #        for specific subclasses. This behavior attempts to make pricing more 

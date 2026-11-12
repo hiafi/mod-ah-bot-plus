@@ -305,6 +305,7 @@ private:
     uint32 PriceMinimumCenterBaseMisc;
     uint32 PriceMinimumCenterBaseGlyph;
     std::unordered_map<uint32, uint64> PriceMinimumCenterBaseOverridesByItemID;
+    std::unordered_map<uint32, uint32> PriceMultiplierPercentByItemID;
     bool ListedItemIDRestrictedEnabled;
     uint32 ListedItemIDMin;
     uint32 ListedItemIDMax;
